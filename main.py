@@ -1,7 +1,7 @@
 #!/bin/env python3
 
 from datetime import datetime 
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 
@@ -69,19 +69,16 @@ posts = [
 @app.route("/")
 @app.route("/home")
 def main():
-    return render_template('landing.html', title="Blog | Mar Bocatcat", posts=posts)
-
-# @app.route("/register")
-# def register():
-#    form = RegistrationForm()
-    # Pass the RegistrationForm class that we created.
-#    return render_template('register.html', title='Register', form=form)
+    return render_template('content.html', title="Mar Bocatcat", posts=posts)
 
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    return render_template('login.html', title="Login", form=form)
+    if request.method == 'POST':
+        pass  #put in logic after submitting credentials.
+    else:
+        return render_template('login.html', title='Login', form=form)
 
 
 if __name__ == "__main__":
