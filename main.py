@@ -1,7 +1,7 @@
 #!/bin/env python3
 
 from datetime import datetime 
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, flash, redirect
 from flask_sqlalchemy import SQLAlchemy
 from forms import RegistrationForm, LoginForm
 
@@ -68,17 +68,20 @@ posts = [
 
 @app.route("/")
 @app.route("/home")
-def main():
+def home():
     return render_template('content.html', title="Mar Bocatcat", posts=posts)
 
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     form = LoginForm()
-    if request.method == 'POST':
-        pass  #put in logic after submitting credentials.
-    else:
-        return render_template('login.html', title='Login', form=form)
+    if form.validate_on_submit():
+        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
+            flash('You have been logged in!', 'is-success' ) 
+            return redirect(url_for('home'))
+        else:
+            flash('Unsuccessfull login!', 'is-danger')
+    return render_template('login.html', title="Login", form=form)
 
 
 if __name__ == "__main__":

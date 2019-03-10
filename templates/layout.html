@@ -20,7 +20,7 @@
                 </div>
                 <div class="navbar-menu">
                     <div class="navbar-start">
-                        <a class="navbar-item" href="/">
+                        <a class="navbar-item" href="{{ url_for('home') }}">
                             Home
                         </a>
                         <a class="navbar-item">
@@ -39,7 +39,7 @@
                                 <a class="button is-primary">
                                     <strong>Sign Up</strong>
                                 </a>
-                                <a class="button is-light" href="/login">
+                                <a class="button is-light" href="{{ url_for('login') }}">
                                     Log In
                                 </a>
                             </div>
@@ -47,10 +47,21 @@
                     </div>
                 </div>
             </nav>
+
             <!-- Content Section ----------------------------------------------->
             <section class="section">
             <div class="columns is-mobile is-centered">
                 <div class="column is-half">
+                    {% with message = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                            <div class="notification {{ category }}">
+                                      <button class="delete"></button>
+                                      <strong>{{ message }}</strong>
+                             </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
                     {% block content %}{% endblock content %}
                 </div>
             </div>
@@ -59,5 +70,4 @@
     </div>
     </section>
 </body>
-  
 </html>
