@@ -3,8 +3,10 @@
 from datetime import datetime 
 from flask import Flask, render_template, url_for
 from flask_sqlalchemy import SQLAlchemy
+from forms import RegistrationForm, LoginForm
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '58536585b6d207ca4c42ef1c7012c881'
 
 # Set SQLALCHEMY Instance Location to our site project location.
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///site.db"
@@ -68,6 +70,18 @@ posts = [
 @app.route("/home")
 def main():
     return render_template('landing.html', title="Blog | Mar Bocatcat", posts=posts)
+
+# @app.route("/register")
+# def register():
+#    form = RegistrationForm()
+    # Pass the RegistrationForm class that we created.
+#    return render_template('register.html', title='Register', form=form)
+
+
+@app.route("/login")
+def login():
+    form = LoginForm()
+    return render_template('login.html', title="Login", form=form)
 
 
 if __name__ == "__main__":
