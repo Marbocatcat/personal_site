@@ -1,9 +1,15 @@
 from datetime import datetime
-from flaskapp import db
+from flaskapp import db, login_manager
+from flask_login import UserMixin
+
+# This function need to be in place for the login_manager extension to work.
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 # Create SQLAlchemy model/class for both User and the Post.
-class User(db.Model):
+class User(db.Model, UserMixin):
     # Create db id column and set value type as "integer", primary_key sets the
     # entry as unique.
     id = db.Column(db.Integer, primary_key=True)
