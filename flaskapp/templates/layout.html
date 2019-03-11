@@ -52,13 +52,13 @@
             <section class="section">
             <div class="columns is-mobile is-centered">
                 <div class="column is-half">
-                    {% with message = get_flashed_messages(with_categories=true) %}
+                    {% with messages = get_flashed_messages(with_categories=True) %}
                         {% if messages %}
                             {% for category, message in messages %}
                             <div class="notification {{ category }}">
-                                      <button class="delete"></button>
-                                      <strong>{{ message }}</strong>
-                             </div>
+                              <button class="delete"></button>
+                              <strong> {{ message }}</strong>
+                            </div>
                             {% endfor %}
                         {% endif %}
                     {% endwith %}
